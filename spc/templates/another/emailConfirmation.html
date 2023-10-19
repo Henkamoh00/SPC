@@ -1,0 +1,10 @@
+{% autoescape off %}
+Welcom to Smart Pro Centre Platform
+
+Hello {{ name }}
+
+Please confirm your email by clicking on the following link.
+
+confirmation link: {{ protocol }}://{{ domain }}{% url 'activate' uidb64=userId token=token %}
+
+{% endautoescape %}

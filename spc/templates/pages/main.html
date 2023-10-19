@@ -1,0 +1,140 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<header>
+    <div class="header">
+        {% include 'parts/navbar.html' %}
+        {% include 'another/message.html' %}
+
+        {% if not user.is_authenticated %}
+        <div class="margin_auto btns_contener mainHeaderBtns">
+            <a href="{% url 'loginForm' %}" class="mainHeaderBtn">تسجيل الدّخول</a>
+            <a href="{% url 'signupForm' %}" class="mainHeaderBtn">إنشاء حساب</a>
+        </div>
+        {% else %}
+        <div class="header_text_box margin_auto">
+            <span class="header_text">
+                تابع آخر أخبارنا...
+            </span>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="posts" id="posts">
+        <div class="">
+            {% for post in posts %}
+                <div class="post">
+                    
+                    <span class="post_title">
+                        <img src="/static/images/logo.png" class="post_title_img" alt="SPC Logo">
+                        <div class="post_title_data">
+                            <span>
+                                <img src="/static/images/icons/alertIcons/successIcon01.png" class="authentication_icon" alt="">
+                                <bdo dir="ltr">Smart Pro Centre</bdo>
+                            </span>
+                            <p>
+                                <small>
+                                    <time datetime="{{ post.dateTime|date:'F d' }} at {{ post.dateTime|date:'h:i A' }}">
+                                        <abbr title="{{ post.dateTime|date:'l, F d, Y' }} at {{ post.dateTime|date:'h:i A' }}">
+                                            <bdo dir="ltr">{{ post.dateTime|date:'F d' }} at {{ post.dateTime|date:'h:i A' }}</bdo>
+                                        </abbr>
+                                    </time>
+                                </small>
+                            </p>
+                        </div>
+                    </span>
+                    <div class="post_show_less">
+                        <a href="{% url 'post' post.id post.title %}" >
+                        <p dir="auto" class="postBody" id="post'{{ post.title }}'">{{ post.content }}</p></a>
+                        <p class="show_more" id="post'{{ post.title }}'_more">شاهد المزيد..</p>
+                    </div>
+
+                    <a href="{% url 'post' post.id post.title %}" >
+                        <div class="postImages">
+                        {% for img in images %}
+                            {% if img.postID == post %}
+                                <img src="{{ img.images.url }}" class="postImage" alt="Post image">
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    </a>
+                    <form method="POST" class="commentForm">
+                        {% csrf_token %}
+                        <select name="postID" required="" id="id_postID" hidden>
+                            <option value="{{ post.id }}" selected>{{ post.title }}</option>
+                        </select>
+                        {{commentForm}}
+                        <input type="submit" value="تعليق" class="commentSubmitBtn">
+                    </form>
+                    <details id="comments">
+                        <summary class="commentSummaryTag">التعليقات</summary>
+                        <div class="">
+                            
+                            {{ count.initial }}
+                            {% for comment in comments %}
+                                {% if comment.postID == post and count.count_ < 5 %}
+                                    {{ count.increment }}
+                                    <div class="comment">
+                                        <span class="comment_body">
+                                            {% for userProfile in userProfiles %}
+                                                {% if userProfile.user == comment.userID %}
+                                                <img src="{{ userProfile.image.url }}" class="comment_title_img" alt="User image">
+                                                {% endif %}
+                                            {% endfor %}
+                                            <div class="comment_title_body">
+                                                <div class="comment_title_data">
+                                                    {{ comment.userID.first_name }} {{ comment.userID.last_name }}
+                                                    <details>
+                                                        <summary></summary>
+                                                        {% if user.is_authenticated and comment.userID.id == user.id %}
+                                                        <div class="btns_contener">
+                                                            <a href="{% url 'commentUpdateForm' comment.id %}" class="commentBtn">تعديل</a>
+                                                            <a href="{% url 'deleteComment' comment.id 'main' %}" class="commentBtn">حذف</a>
+                                                        </div>
+                                                        {% endif %}
+                                                    </details>
+                                                </div>
+                                                <p dir="auto" class="commentBody">{{ comment.comment }}</p>
+                                            </div>
+                                        </span>
+                                        <small>
+                                            <time datetime="{{ comment.dateTime|date:'d-m-Y' }} at {{ comment.dateTime|date:'h:i A' }}">
+                                                <abbr title="{{ comment.dateTime|date:'l, F d, Y' }} at {{ comment.dateTime|date:'h:i A' }}">
+                                                    <bdo dir="ltr">{{ comment.dateTime|date:'d-m-Y' }} at {{ comment.dateTime|date:'h:i A' }}</bdo>
+                                                </abbr>
+                                            </time>
+                                        </small>
+                                        
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if count.count_ == 0 %}
+                                <h4>لا توجد تعليقات حتى الآن...</h4>
+                            {% endif %}
+
+                        </div>
+                    </details>
+                </div>
+            {% empty %}
+                <h4>لا توجد منشورات</h4>
+            {% endfor %}
+
+            
+            {% if posts %}
+            <hr>
+            {% include 'another/pagination.html' with page=posts %}
+            {% endif %}
+
+
+        </div>
+    </div>
+</main>
+{% include 'parts/map.html' %}
+{% include 'parts/footer.html' %}
+{% endif %}
+
+
+{% endblock content %}

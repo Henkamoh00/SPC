@@ -1,0 +1,195 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+
+
+
+/*============================= Contener part =============================*/
+
+section {
+    height: auto;
+    width: 80vw;
+    margin: auto;
+    overflow: hidden;
+}
+
+.content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: stretch;
+    overflow: hidden;
+    padding: 10vh 3vw;
+}
+
+/*============================= Button part =============================*/
+
+.btns_contener {
+    flex: 0 0 auto;
+    width: fit-content;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.btn_ {
+    flex: 0 0 auto;
+    display: inline-block;
+    width: fit-content;
+    padding: 6px 10px;
+    margin: 0px .20em;
+    font-weight: 400;
+    font-size: 1.5em;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.btn_success {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.btn_info {
+    color: #004085;
+    background-color: #0ee5ff;
+}
+
+
+.btn_debug {
+    color: #383d41;
+    background-color: #e2e3e5;
+}
+
+
+.btn_warning {
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+
+.btn_denger {
+    color: #721c24;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn_not_bg {
+    background-color: transparent !important;
+}
+
+.btn_denger:hover {
+    background-color: #dc3545 !important;
+}
+
+/*============================= Alert box part =============================*/
+
+.alert_ {
+    position: absolute;
+    z-index: 5;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
+    font-weight: 100;
+    font-size: 1.2em;
+    word-break: break-word;
+    padding: 10px 30px;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    -o-border-radius: .25rem;
+}
+
+.alert_ span {
+    vertical-align: middle;
+}
+
+.alert_ img {
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+}
+  
+.alert_success {
+    color: #155724;
+    background: #d4edda url(../images/svg/icon-yes.svg) 40px 12px repeat;
+    border-color: #c3e6cb;
+}
+
+.alert_info {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+
+.alert_debug {
+    color: #383d41;
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+}
+
+
+.alert_warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+
+.alert_error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/*============================= Card box part =============================*/
+
+.card {
+    flex: 0 0 auto;
+    word-wrap: break-word;
+    height: auto;
+    width: 15.625em;
+    min-width: 12.5em;
+    max-width: 25em;
+    border-radius: .25em;
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    -ms-border-radius: .25em;
+    -o-border-radius: .25em;
+}
+
+.card img {
+    width: 15.625em;
+    min-width: 100%;
+    height: 15.625em;
+    min-height: 70%;
+}
+
+.card .data{
+    text-align: center;
+    min-height: 2.5em;
+    padding: .625em 0;
+}

@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon"
+            data-default-icon="{% static 'images/logo.png' %}" 
+            type="image/x-icon"
+            href="{% static 'images/logo.png' %}">
+    <link rel="stylesheet" href="{% static 'css/baseStyle.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/formStyle.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/stondard.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/show_hideText.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/scrollbar.css' %}"/>
+    <title>{{ title }} | Smart Pro Centre</title>
+</head>
+<body>
+
+
+{% block content %}
+
+{% endblock content %}
+
+
+<script>
+    setTimeout(() => {
+        const box = document.getElementById('alert_');
+
+        // 👇️ removes element from DOM
+        box.style.display = "none";
+
+        // 👇️ hides element (still takes up space on page)
+        // box.style.visibility = 'hidden';
+    }, 5000); // 👈️ time in milliseconds
+
+
+
+
+
+    const text = document.getElementsByClassName("postBody");
+    const show_more_btn = document.getElementsByClassName("show_more");
+    
+    const textShrink = "display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;";
+
+
+    function postBody_func(){
+        for(i=0; i<text.length; i++){
+            var spaces = (text[i].innerHTML).split(" ").length - 1;
+            if(spaces >= 50){
+                text[i].style.cssText = textShrink;
+                show_more_btn[i].style.display = "block";
+            }
+
+        }
+    }
+
+    const buttonPressed = e => {
+        id = e.target.id.split("_")
+        if(e.target.innerHTML === "شاهد المزيد.."){
+            document.getElementById(id[0]).style.cssText = "";
+            e.target.innerHTML = "شاهد أقل.";
+        }
+        else{
+            document.getElementById(id[0]).style.cssText = textShrink;
+            e.target.innerHTML = "شاهد المزيد..";
+        }
+    }
+    for(let btn of show_more_btn){
+        btn.addEventListener("click", buttonPressed);
+    }
+    
+    window.onload = postBody_func();
+    
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% load static %}
+
+<div class="content">
+    <a href="{% url 'index' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt="SPC logo"></a>
+    {% if user.is_authenticated %}
+    <div class="btns_contenet">
+        <a href="{% url 'profile' %}" class="btn_ btn_info">الملف الشخصي</a>
+        <a href="{% url 'logout' %}" class="btn_ btn_denger btn_not_bg">خروج</a>
+    </div>
+    {% endif %}
+</div>

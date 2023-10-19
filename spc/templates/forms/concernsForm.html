@@ -1,0 +1,15 @@
+{% extends 'forms/base.html' %}
+
+{% block content %}
+
+{% include 'another/message.html' %}
+
+<div class="login main">
+    <form method="POST" class="loginForm signupForm">
+        <!-- <h2 class="loginTitle">إنشغالك</h2> -->
+        {% csrf_token %}
+        {{ concernsForm }}
+        <input type="submit" value="إرسال" class="btn_ loginBtn">
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends 'forms/base.html' %}
+
+{% block content %}
+
+{% include 'another/message.html' %}
+
+<div class="login main">
+    <form method="POST" class="loginForm">
+        <h2 class="loginTitle">تسجيل الدّخول</h2>
+        <div class="inLoginForm">
+            {% csrf_token %}
+            {{ loginForm }}
+            <a href="{% url 'passwordReset' %}">نسيت كلمة المرور؟</a>
+            <input type="submit" value="دخول" class="btn_ loginBtn">
+            <p class="text-center">إذا لم يكن لديك حساب، <a href="{% url 'signupForm' %}">أنشئ حساب</a>.</p>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+

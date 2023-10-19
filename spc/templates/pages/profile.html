@@ -1,0 +1,110 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<header>
+    <div class="header" style="background-image: none; background-color: #f1f1f1; height: fit-content;">
+        <div class="content">
+            <a href="{% url 'index' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt="SPC logo"></a>
+            {% if user.is_authenticated %}
+            <div class="btns_contener">
+                <a href="{% url 'profileUpdate' %}" class="btn_ btn_info">تعديل</a>
+                <a href="{% url 'logout' %}" class="btn_ btn_denger btn_not_bg">خروج</a>
+
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+{% include 'another/message.html' %}
+
+{% if user.is_authenticated %}
+<main class="bgProfile">
+    <section>
+        <div class="content data_profile_content">
+            <div class="card col1">
+                <img src="{{ profile.image.url }}" alt="{{ user.username }}">
+                <div class="data">
+                    <h3>{{ user.username }}</h3>
+                </div>
+            </div>
+            <div class="col2">
+                <div class="line">
+                    <span>الاِسم الكامل: </span>
+                    <span>{{ user.first_name }} {{ user.last_name }}</span>
+                </div>
+                <div class="line">
+                    <span>البريد الإلكتروني: </span>
+                    <span>{{ user.email }}</span>
+                </div>
+                <div class="line">
+                    <span>الجنس: </span>
+                    <span>{{ profile.gender }}</span>
+                </div>
+                <div class="line">
+                    <span>رقم الهاتف: </span>
+                    <span>{{ profile.phoneNumber }}</span>
+                </div>
+                <div class="line">
+                    <span>العنوان: </span>
+                    <span>{{ profile.address }}</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="comment_profile_content" id="comments" >
+            <h4 class="profile_action_title">نشاطك على المنصّة</h4>
+            {% for usercomment in userComments %}
+            <div class="post profileComment">
+
+                <span class="post_title">
+                    <div class="post_title_data">
+                        <p>
+                            علّقت على 
+                            <a href="{% url 'post' usercomment.postID.id usercomment.postID.title %}" dir="auto" >
+                                {{ usercomment.postID.title }}
+                            </a>
+                        </p>
+                        <small>
+                            <time datetime="{{ usercomment.dateTime|date:'d-m-Y' }} at {{ usercomment.dateTime|date:'h:i A' }}">
+                                <abbr title="{{ usercomment.dateTime|date:'l, F d, Y' }} at {{ usercomment.dateTime|date:'h:i A' }}">
+                                    <bdo dir="ltr">{{ usercomment.dateTime|date:'d-m-Y' }} at {{ usercomment.dateTime|date:'h:i A' }}</bdo>
+                                </abbr>
+                            </time>
+                        </small>
+                    </div>
+                </span>
+
+                <div class="comment">
+                    <span class="comment_body">
+                        <img src="{{ profile.image.url }}" class="comment_title_img" alt="{{ user.username }}">
+                        <div class="comment_title_body">
+                            <div class="comment_title_data">
+                                <bdo dir="auto">{{ profile.user.first_name }} {{ profile.user.last_name }}</bdo>
+                                <details>
+                                    <summary></summary>
+                                    <div class="btns_contener">
+                                        <a href="{% url 'commentUpdateForm' usercomment.id %}" class="commentBtn">تعديل</a>
+                                        <a href="{% url 'deleteComment' usercomment.id 'profile' %}" class="commentBtn">حذف</a>
+                                    </div>
+                                </details>
+                            </div>
+                            <p dir="auto" class="commentBody">{{ usercomment.comment }}</p>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            {% empty %}
+            <h4>لا توجد تعليقات من طرفك</h4>
+            {% endfor %}
+
+            {% if userComments %}
+            {% include 'another/commentsPagination.html' with page=userComments %}
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endif %}
+{% endblock content %}

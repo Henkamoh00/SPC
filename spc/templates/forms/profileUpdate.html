@@ -1,0 +1,40 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/baseStyle.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/formStyle.css' %}"/>
+<div class="main">
+    <header>
+        <div class="header" style="background-image: none; background-color: #f1f1f1; height: fit-content;">
+            <div class="content">
+                <a href="{% url 'index' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt="SPC logo"></a>
+                {% if user.is_authenticated %}
+                <div class="btns_contener">
+                    <a href="{% url 'logout' %}" class="btn_ btn_denger btn_not_bg">خروج</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% include 'another/message.html' %}
+
+    {% if user.is_authenticated %}
+    <div class="pUContent">
+        <form method="POST" enctype="multipart/form-data" aria-multiselectable="true" class="loginForm signupForm pUForm">
+            <div class="card imgCard">
+                <label for="fileInput" class="fileInput">
+                    <img src="{{ profile.image.url }}" alt="{{ user.username }}">
+                </label>
+            </div>
+            {% csrf_token %}
+            {{ userUpdateForm }}
+            {{ profileUpdateForm }}
+            <a href="{% url 'passwordChange' %}" class="radioInput">تغيير كلمة المرور</a>
+            <input type="submit" value="حفظ التّغييرات" class="btn_ loginBtn">
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

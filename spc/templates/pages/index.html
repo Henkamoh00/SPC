@@ -1,0 +1,95 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<header>
+    <div class="header">
+        {% include 'parts/navbar.html' %}
+        {% include 'another/message.html' %}
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'main' %}" class="joinBtn">أخبارنا</a>
+        {% else %}
+        <a href="{% url 'main' %}" class="joinBtn">اِنضم لنا</a>
+        {% endif %}
+        
+    </div>
+</header>
+<main>
+    
+    {% if about %}
+    <section>
+        <div class="about">
+            <h2 class="title">من نحن؟</h2>
+            <div class="content" dir="auto">
+                {% for ab in about %}
+                <img loading="lazy" class="" src="{{ ab.image.url }}" alt="SPC image">
+                <article>{{ ab.text }}</article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    {% if services %}
+    <section>
+        <div class="services">
+            <h2 class="title">خدماتنا</h2>
+            <div class="content">
+                {% for service in services %}
+                <div class="card">
+                    <img loading="lazy" src="{{ service.image.url }}" alt="Service image">
+                    <div class="data">
+                        <h3 dir="auto">{{ service.title }}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    {% if history %}
+    <section>
+        <div class="jobs">
+            <h2 class="title">إنجازاتنا</h2>
+            <div class="content">
+                {% for hist in history %}
+                <div class="card">
+                    <img loading="lazy" src="{{ hist.image.url }}" alt="Job image">
+                    <div class="data">
+                        <h3 dir="auto">{{ hist.title }}</h3>
+                        <p dir="auto">{{ hist.abstract }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    {% if team %}
+    <section>
+        <div class="employes">
+            <h2 class="title">فريقنا</h2>
+            <div class="content">
+                {% for emp in team %}
+                <div class="card">
+                    <img loading="lazy" src="{{ emp.image.url }}" alt="Employe image">
+                    <div class="data">
+                        <h3 dir="auto">{{ emp.emp_name }}</h3>
+                        <p dir="auto">{{ emp.job_position }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+</main>
+
+{% include 'parts/map.html' %}
+{% include 'parts/footer.html' %}
+{% endblock content %}

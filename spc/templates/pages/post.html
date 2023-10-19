@@ -1,0 +1,123 @@
+{% extends 'forms/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'another/message.html' %}
+
+<div class="block">
+    <div class="detailsPage">
+        {% if images %}
+            <div class="imgDetailsPageBody">
+                <div class="imgDetailsPage">
+                    {% for img in images %}
+                        {% if images.has_next %}
+                            <a href="?page2={{ images.next_page_number }}" class="nextFlesh"><span class="nextFleshIcon">&#10151;</span></a>
+                        {% endif %}
+                        <img src="{{ img.images.url }}" alt="Post image">
+                        {% if images.has_previous %}
+                            <a href="?page2={{ images.previous_page_number }}" class="preFlesh"><span class="preFleshIcon">&#10151;</span></a>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+        <style>
+            @media (max-width : 1000px) {
+                .dataDetailsPageBody {
+                    width: 100vw;
+                    height: 100%;
+                    text-align: justify;
+                }
+            }
+        </style>
+        {% endif %}
+
+        <div class="dataDetailsPageBody">
+            <div class="">
+                <span class="post_title ">
+                    <img src="/static/images/logo.png" class="post_title_img" alt="SPC Logo">
+                    <div class="post_title_data">
+                        <span>
+                            <img src="/static/images/icons/alertIcons/successIcon01.png" class="authentication_icon" alt="">
+                            <bdo dir="ltr">Smart Pro Centre</bdo>
+                        </span>
+                        <p>
+                            <small>
+                                <time datetime="{{ post.dateTime|date:'F d' }} at {{ post.dateTime|date:'h:i A' }}">
+                                    <abbr title="{{ post.dateTime|date:'l, F d, Y' }} at {{ post.dateTime|date:'h:i A' }}">
+                                        <bdo dir="ltr">{{ post.dateTime|date:'F d' }} at {{ post.dateTime|date:'h:i A' }}</bdo>
+                                    </abbr>
+                                </time>
+                            </small>
+                        </p>
+                    </div>
+                </span>
+                
+                <div class="post_show_less">
+                    <p dir="auto" class="postBody" id="post'{{ post.title }}'">{{ post.content }}</p>
+                    <p class="show_more" id="post'{{ post.title }}'_more">شاهد المزيد..</p>
+                </div>
+                    
+                
+                <form method="POST" class="commentForm">
+                    {% csrf_token %}
+                    <select name="postID" required="" id="id_postID" hidden>
+                        <option value="{{ post.id }}" selected>{{ post.title }}</option>
+                    </select>
+                    {{commentForm}}
+                    <input type="submit" value="تعليق" class="commentSubmitBtn">
+                </form>
+            
+                <div class="" id="comments" >
+                    {% for comment in comments %}
+                    <div class="comment">
+                        <span class="comment_body">
+                            {% for userProfile in userProfiles %}
+                                {% if userProfile.user == comment.userID %}
+                                <img src="{{ userProfile.image.url }}" class="comment_title_img" alt="User image">
+                                {% endif %}
+                            {% endfor %}
+                            <div class="comment_title_body">
+                                <div class="comment_title_data">
+                                    {{ comment.userID.first_name }} {{ comment.userID.last_name }}
+                                    <details>
+                                        <summary></summary>
+                                        {% if user.is_authenticated and comment.userID.id == user.id %}
+                                        <div class="btns_contener">
+                                            <a href="{% url 'commentUpdateForm' comment.id %}" class="commentBtn">تعديل</a>
+                                            <a href="{% url 'deleteComment' comment.id 'post' %}" class="commentBtn">حذف</a>
+                                        </div>
+                                        {% endif %}
+                                    </details>
+                                </div>
+                                <p dir="auto" class="commentBody">{{ comment.comment }}</p>
+                            </div>
+                        </span>
+                        <small>
+                            <time datetime="{{ comment.dateTime|date:'d-m-Y' }} at {{ comment.dateTime|date:'h:i A' }}">
+                                <abbr title="{{ comment.dateTime|date:'l, F d, Y' }} at {{ comment.dateTime|date:'h:i A' }}">
+                                    <bdo dir="ltr">{{ comment.dateTime|date:'d-m-Y' }} at {{ comment.dateTime|date:'h:i A' }}</bdo>
+                                </abbr>
+                            </time>
+                        </small>
+                        
+                    </div>
+                    {% empty %}
+                        <h4>لا توجد تعليقات حتى الآن...</h4>
+                    {% endfor %}
+        
+                    {% if comments %}
+                    {% include 'another/commentsPagination.html' with page=comments %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+
+</div>
+
+{% endblock content %}

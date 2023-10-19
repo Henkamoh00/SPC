@@ -1,0 +1,36 @@
+{% load static %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert_ alert_success" id="alert_">
+                <img src="{% static 'images/icons/alertIcons/successIcon01.png' %}" alt="">
+                <span>{{message}}</span>
+            </div>
+        {% endif %}
+        {% if message.tags == 'info' %}
+            <div class="alert_ alert_info" id="alert_">
+                <img src="{% static 'images/icons/alertIcons/infoIcon.png' %}" alt="">
+                <span>{{message}}</span>
+            </div>
+        {% endif %}
+        {% if message.tags == 'debug' %}
+            <div class="alert_ alert_debug" id="alert_">
+                <img src="{% static 'images/icons/alertIcons/bugIcon.png' %}" alt="">
+                <span>{{message}}</span>
+            </div>
+        {% endif %}
+        {% if message.tags == 'warning' %}
+            <div class="alert_ alert_warning" id="alert_">
+                <img src="{% static 'images/icons/alertIcons/warningIcon02.png' %}" alt="">
+                <span>{{message}}</span>
+            </div>
+        {% endif %}
+        {% if message.tags == 'error' %}
+            <div class="alert_ alert_error" id="alert_">
+                <img src="{% static 'images/icons/alertIcons/errorIcon.png' %}" alt="">
+                <span>{{message}}</span>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

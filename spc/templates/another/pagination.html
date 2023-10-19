@@ -1,0 +1,15 @@
+<div class="content" style="padding: 35px 0px;">
+    {% if page.has_previous %}
+    <a href="?page1={{ page.previous_page_number }}#posts" style="background-color: #d9d9d9; font-size: 1em; font-weight: 400; padding: 5px 15px;" >السّابق</a>
+    {% else %}
+    <button style="background-color: #d9d9d9; font-size: 1em; font-weight: 700; padding: 5px 15px; cursor: auto;" disabled>السّابق</button>
+    {% endif %}
+
+    <span>الصفحة {{ page.number }} من {{ page.paginator.num_pages }}</span>
+
+    {% if page.has_next %}
+    <a href="?page1={{ page.next_page_number }}#posts" style="background-color: #d9d9d9; font-size: 1em; font-weight: 400; padding: 5px 15px;" >التّالي</a>
+    {% else %}
+    <button style="background-color: #d9d9d9; font-size: 1em; font-weight: 700; padding: 5px 15px; cursor: auto;" disabled>التّالي</button>
+    {% endif %}
+</div>

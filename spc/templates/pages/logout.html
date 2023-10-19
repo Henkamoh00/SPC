@@ -1,0 +1,13 @@
+{% extends 'forms/base.html' %}
+
+{% block content %}
+
+    {% if not user.is_authenticated %}
+    {% include 'another/message.html' %}
+
+    <div class="logout">
+        <a href="{% url 'loginForm' %}" class="">سجّل الدخول مجدّداً</a>
+    </div>
+
+    {% endif %}
+{% endblock content %}

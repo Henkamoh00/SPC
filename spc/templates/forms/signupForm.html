@@ -1,0 +1,19 @@
+{% extends 'forms/base.html' %}
+
+{% block content %}
+
+{% include 'another/message.html' %}
+
+<div class="login main">
+    <form method="POST" class="loginForm signupForm">
+        <h2 class="loginTitle">إنشاء حساب</h2>
+        <div class="inLoginForm inSignupForm">
+            {% csrf_token %}
+            {{ signupForm }}
+            <input type="submit" value="تسجيل" class='btn_ loginBtn'>
+            <p class="text-center signupText">إذا كان لديك حساب بالفعل، <a href="{% url 'loginForm' %}">سجّل الدّخول</a> بدلًا من ذلك.</p>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
